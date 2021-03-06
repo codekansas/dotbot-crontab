@@ -24,13 +24,8 @@ class Crontab(dotbot.Plugin):
 
         cron = CronTab(user=True)
 
-        # Only write crontab if we make a change.
-        updated = False
-
         # Remove all existing dotbot crontabs.
-        for job in cron.find_comment("dotbot"):
-            cron.remove(job)
-            updated = True
+        updated = cron.remove_all(comment="dotbot") > 0
 
         # Add from config.
         for i, entry in enumerate(data):
