@@ -1,0 +1,3 @@
+[submodule "pycrontab"]
+	path = python-crontab
+	url = git@github.com:peak6/python-crontab.git
