@@ -30,11 +30,9 @@ Adds a `crontab` directive, which can be configured as follows:
   - time: 0 5 * * *
     command: brew update && brew upgrade
     platform: darwin                        # Optional
-    comment: Update Brew nightly            # Optional
   - time: 0 5 * * *
     command: apt update && apt upgrade
     platform: linux                         # Optional
-    comment: Update APT nightly             # Optional
 ```
 
 ## Under the Hood

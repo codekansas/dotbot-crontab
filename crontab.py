@@ -28,7 +28,7 @@ class Crontab(dotbot.Plugin):
         updated = False
 
         # Remove all existing dotbot crontabs.
-        for job in cron.find_comment(re.compile(r"^dotbot")):
+        for job in cron.find_comment("dotbot"):
             cron.remove(job)
             updated = True
 
@@ -44,17 +44,12 @@ class Crontab(dotbot.Plugin):
             command = entry.pop("command")
             job = cron.new(command=command, comment="dotbot")
 
-            if "comment" in entry:
-                comment = entry.pop("comment")
-                job.set_comment(f"{job.comment} - {comment}")
-
             if not CronSlices.is_valid(time):
                 self._log.error(f"Skipping entry {i} - invalid time {time}")
                 continue
             job.setall(time)
 
             if "platform" in entry and entry.pop("platform") != sys.platform:
-                job.set_comment(f"{job.comment} - disabled on {sys.platform}")
                 job.enable(False)
 
             if entry:
