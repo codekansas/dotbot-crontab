@@ -14,7 +14,6 @@ from crontab import CronSlices, CronTab
 
 class Crontab(dotbot.Plugin):
 
-
     def can_handle(self, directive: str) -> bool:
         return directive == "crontab"
 
