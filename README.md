@@ -1,6 +1,6 @@
 # dotbot-crontab
 
-Crontab plugin for Dotbot.
+Crontab plugin for [Dotbot][dotbot].
 
 ## Installation
 
@@ -39,4 +39,5 @@ Adds a `crontab` directive, which can be configured as follows:
 
 This is basically just a wrapper for [python-crontab][python-crontab]. Doing `./install` clears the existing DotBot-generated commands and refreshes with whatever is in your `install.conf.yaml` file.
 
+[dotbot]: https://github.com/anishathalye/dotbot
 [python-crontab]: https://pypi.org/project/python-crontab/
