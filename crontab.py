@@ -7,7 +7,7 @@ from typing import Any, Dict, List
 
 import dotbot
 
-# Adds submodule to system path.
+# Adds submodule so that we can import crontab.
 sys.path.append(str(Path(__file__).parent / "python-crontab"))
 from crontab import CronSlices, CronTab
 
