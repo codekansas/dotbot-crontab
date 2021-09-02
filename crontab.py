@@ -22,10 +22,21 @@ class Crontab(dotbot.Plugin):
             self._log.error(f"Can't handle directive {directive}")
             return False
 
+        any_changes_requested = False
+
+        for entry in data:
+            if entry.get("platform") is None or entry.get("platform") == sys.platform:
+                any_changes_requested = True
+        if not any_changes_requested:
+            self._log.lowinfo("No actions in crontab task match current platform, exiting")
+            return True
+
         cron = CronTab(user=True)
 
         # Remove all existing dotbot crontabs.
-        updated = cron.remove_all(comment="dotbot") > 0
+        removed = cron.remove_all(comment="dotbot") 
+        updated = removed > 0
+        self._log.lowinfo(f"Removing {removed} old dotbot entries from users's crontab")
 
         # Add from config.
         for i, entry in enumerate(data):
@@ -49,6 +60,8 @@ class Crontab(dotbot.Plugin):
 
             if entry:
                 self._log.error(f"Unused config keys: {list(entry.keys())}")
+            
+            self._log.lowinfo(f"Adding command {command} at time {time} to users's crontab")
 
             updated = True
 
