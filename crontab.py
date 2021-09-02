@@ -25,7 +25,9 @@ class Crontab(dotbot.Plugin):
         cron = CronTab(user=True)
 
         # Remove all existing dotbot crontabs.
-        updated = cron.remove_all(comment="dotbot") > 0
+        removed = cron.remove_all(comment="dotbot") 
+        updated = removed > 0
+        self._log.lowinfo(f"Removing {removed} old dotbot entries from users's crontab")
 
         # Add from config.
         for i, entry in enumerate(data):
@@ -49,6 +51,8 @@ class Crontab(dotbot.Plugin):
 
             if entry:
                 self._log.error(f"Unused config keys: {list(entry.keys())}")
+            
+            self._log.lowinfo(f"Adding command {command} at time {time} to users's crontab")
 
             updated = True
 
