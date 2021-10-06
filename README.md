@@ -39,5 +39,13 @@ Adds a `crontab` directive, which can be configured as follows:
 
 This is basically just a wrapper for [python-crontab][python-crontab]. Doing `./install` clears the existing DotBot-generated commands and refreshes with whatever is in your `install.conf.yaml` file.
 
+## Contributing
+
+Run `black` after any code changes:
+
+```bash
+black crontab.py
+```
+
 [dotbot]: https://github.com/anishathalye/dotbot
 [python-crontab]: https://pypi.org/project/python-crontab/

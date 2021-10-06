@@ -13,7 +13,6 @@ from crontab import CronSlices, CronTab
 
 
 class Crontab(dotbot.Plugin):
-
     def can_handle(self, directive: str) -> bool:
         return directive == "crontab"
 
@@ -25,21 +24,28 @@ class Crontab(dotbot.Plugin):
         any_changes_requested = False
 
         for entry in data:
-            if entry.get("platform") is None or entry.get("platform") == sys.platform:
+            platform = entry.get("platform")
+            if platform is None or platform == sys.platform:
                 any_changes_requested = True
         if not any_changes_requested:
-            self._log.lowinfo("No actions in crontab task match current platform, exiting")
+            self._log.lowinfo(
+                "No actions in crontab task match current platform, exiting"
+            )
             return True
 
         cron = CronTab(user=True)
 
         # Remove all existing dotbot crontabs.
-        removed = cron.remove_all(comment="dotbot") 
+        removed = cron.remove_all(comment="dotbot")
         updated = removed > 0
         self._log.lowinfo(f"Removing {removed} old dotbot entries from users's crontab")
 
         # Add from config.
         for i, entry in enumerate(data):
+            if "key" in entry and "value" in entry:
+                cron.env[entry.pop("key")] = entry.pop("value")
+                continue
+
             if "time" not in entry:
                 self._log.error(f"Skipping entry {i} - missing `time` config")
                 continue
@@ -60,8 +66,10 @@ class Crontab(dotbot.Plugin):
 
             if entry:
                 self._log.error(f"Unused config keys: {list(entry.keys())}")
-            
-            self._log.lowinfo(f"Adding command {command} at time {time} to users's crontab")
+
+            self._log.lowinfo(
+                f"Adding command {command} at time {time} to users's crontab"
+            )
 
             updated = True
 
