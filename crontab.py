@@ -43,6 +43,8 @@ class Crontab(dotbot.Plugin):
         # Add from config.
         for i, entry in enumerate(data):
             if "key" in entry and "value" in entry:
+                if "platform" in entry and entry.pop("platform") != sys.platform:
+                    continue
                 cron.env[entry.pop("key")] = entry.pop("value")
                 continue
 

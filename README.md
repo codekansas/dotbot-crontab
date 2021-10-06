@@ -13,7 +13,6 @@ git submodule add git@github.com:codekansas/dotbot-crontab.git
 Update `install` script to enable the `dotbot-crontab` plugin:
 
 ```bash
-
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
     -d "${BASEDIR}" \
     -c "${CONFIG}" \
@@ -23,10 +22,15 @@ Update `install` script to enable the `dotbot-crontab` plugin:
 
 ## Usage
 
-Adds a `crontab` directive, which can be configured as follows:
+Adds a `crontab` directive, which can be configured like the examples below:
 
 ```yaml
 - crontab:
+  - key: SHELL
+    value: /bin/bash
+    platform: darwin
+  - key: RANDOM_DELAY
+    value: 10
   - time: 0 5 * * *
     command: brew update && brew upgrade
     platform: darwin                        # Optional
