@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
 import sys
+from pathlib import Path
 from typing import Any, Dict, List
 
 import dotbot
 
+sys.path.append(str(Path(__file__).parent.resolve()))
 from crontab import CronSlices, CronTab
 
 
